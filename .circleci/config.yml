@@ -127,7 +127,8 @@ jobs:
               --template-file .circleci/files/backend.yml \
               --tags project=diptiudapeopleBackend \
               --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:1} \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:1}"                
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:1}"  
+          no_output_timeout: 30m
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -136,6 +137,7 @@ jobs:
               --tags project=diptiudapeopleFrontend \
               --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:1} \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:1}"               
+          no_output_timeout: 30m
       - run:
           name: Add back-end ip to ansible inventory
           command: |
