@@ -125,11 +125,8 @@ jobs:
             cd ~/project/backend
             npm install
             npm run test
-#      - save_cache:
- #         paths: [backend/node_modules]
-  #        key: backend-build
           
-   scan-frontend:
+  scan-frontend:
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -317,7 +314,7 @@ jobs:
           root: .
           paths:
             - frontend/dist
-          command: |
+#          command: |
             # your code here
       # Here's where you will add some code to rollback on failure     
       - destroy-environment
@@ -356,7 +353,7 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-smoke-test:
+  smoke-test:
     docker:
       - image: python:3.9.0-alpine 
     steps:
@@ -435,7 +432,7 @@ workflows:
       - build-backend:
           requires:
             - install-backend-dependencies
-     - test-frontend:
+      - test-frontend:
           requires: 
             - build-frontend
       - test-backend:
