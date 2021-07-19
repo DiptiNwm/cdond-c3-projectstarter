@@ -164,20 +164,20 @@ jobs:
       - run:
           name: Install dependencies
           command: yum install -y tar gzip
-     - run:
-         name: Ensure back-end infrastructure exists
-           command: |
+      - run:
+          name: Ensure back-end infrastructure exists
+          command: |
              aws cloudformation deploy \
                --template-file .circleci/files/backend.yml \
                --tags project=diptiudapeopleBackend \
                --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
                --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-           no_output_timeout: 30m
+              no_output_timeout: 30m
            
-       - run:
+      - run:
            name: Ensure front-end infrastructure exist
            command: |
-             aws cloudformation deploy \
+              aws cloudformation deploy \
                --template-file .circleci/files/frontend.yml \
                --tags project=diptiudapeopleFrontend \
                --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} \
