@@ -172,7 +172,7 @@ jobs:
                --tags project=diptiudapeopleBackend \
                --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
                --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-              no_output_timeout: 30m
+          no_output_timeout: 30m
            
       - run:
            name: Ensure front-end infrastructure exist
