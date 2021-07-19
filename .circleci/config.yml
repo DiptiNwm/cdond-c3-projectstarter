@@ -187,9 +187,8 @@ jobs:
       - run:
           name: Save backend URL in memstash
           command: |
-            BACKEND_IP= "13.59.137.36"
-            echo $BACKEND_IP
-            curl -H "Content-Type: text/plain" -H "token: ac8ac330-10d2-4a12-bffc-d5d15eade43d" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
+#            BACKEND_IP= "13.59.137.36"
+            curl -H "Content-Type: text/plain" -H "token: ac8ac330-10d2-4a12-bffc-d5d15eade43d" --request PUT --data "http://13.59.137.36:3030" https://api.memstash.io/values/BACKEND_URL
             
       - run:
           name: Add back-end ip to ansible inventory
@@ -233,22 +232,10 @@ jobs:
             aws --version
       - run:
           name: Configure server
-#          working_directory: ./.circleci/ansible
+          working_directory: ./.circleci/ansible
           command: |
             pwd &&
             ls -la
-            echo ENVIROMENT=production > "backend/.env"
-            echo TYPEORM_CONNECTION=postgres >> "backend/.env"
-            echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
-            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
-            echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> "backend/.env"
-            echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
-            echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
-            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
-            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
-            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
-            cat backend/.env
-            cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
       
@@ -273,17 +260,7 @@ jobs:
       - run:
           name: Run migrations
           working_directory: ./backend
-          command: |          
-            echo ENVIROMENT=$ENVIROMENT > ".env"
-            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> ".env"
-            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> ".env"
-            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> ".env"
-            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> ".env"
-            echo TYPEORM_HOST=$TYPEORM_HOST >> ".env"
-            echo TYPEORM_PORT=$TYPEORM_PORT >> ".env"
-            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ".env"
-            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
-            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
+          command: |                      
             npm install
             npm run migrations > migration_status            
            #touch migrations_log.txt
