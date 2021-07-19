@@ -230,7 +230,6 @@ jobs:
           working_directory: ./.circleci/ansible
           command: |
             apk add --update ansible nodejs npm curl
-#            apk add --update ansible
             ansible --version
             pip3 install --upgrade pip
             pip3 install awscli
