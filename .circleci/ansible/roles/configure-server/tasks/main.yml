@@ -4,13 +4,12 @@
   apt:
     upgrade: yes
     
-- name: install nodejs
-  apt: name=nodejs
-
-- name: install NPM
-  shell: npm i
-  args:
-    chdir: /home/ubuntu
+- name: Install Packages
+    apt: name={{ item }} update_cache=yes state=latest
+    with_items:
+      - npm
+      - nodejs
+      - git
 
 - name: "install dependencies."
   become: yes
