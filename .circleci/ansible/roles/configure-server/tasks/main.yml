@@ -4,15 +4,16 @@
   apt:
     upgrade: yes
     
-- name: "install nodejs 13.8.0"
-  become: yes
-  shell: n 13.8.0
+- name: "install node 13.X"
+  shell: |
+    curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+    sudo apt -y upgrade
+    sudo apt install -y nodejs
 
 - name: "install dependencies."
   become: yes
   apt:
     name: ["nodejs", "npm"]
-    state: latest
 #    update_cache: yes
 
 - name: "install pm2"
