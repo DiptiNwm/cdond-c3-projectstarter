@@ -1,10 +1,4 @@
 ---  
-- name: "update apt packages."
-  become: yes
-  shell: apt-get update
-#  apt:
-#     update_cache: yes
-      
 - name: "upgrade packages"
   become: yes
   apt:
@@ -14,8 +8,8 @@
   become: yes
   apt:
     name: ["nodejs", "npm"]
-    state: latest
-    update_cache: yes
+    state: present
+#    update_cache: yes
 
 - name: "install pm2"
   become: yes
