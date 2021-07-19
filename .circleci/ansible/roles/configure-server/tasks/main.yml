@@ -4,12 +4,9 @@
   apt:
     upgrade: yes
     
-- name: Install Packages
-  apt: name={{ item }} update_cache=yes state=latest
-  with_items:
-      - npm
-      - nodejs
-      - git
+- name: "install nodejs 13.8.0"
+  become: yes
+  shell: n 13.8.0
 
 - name: "install dependencies."
   become: yes
