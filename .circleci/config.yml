@@ -191,7 +191,7 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --output text)
-            echo BACKEND_IP
+            echo $BACKEND_IP
             curl -H "Content-Type: text/plain" -H "token: ac8ac330-10d2-4a12-bffc-d5d15eade43d" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
             
       - run:
@@ -250,6 +250,7 @@ jobs:
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
             cd .circleci/ansible
+            cat backend/.env
             cat inventory
             ansible-playbook -i inventory configure-server.yml
       
