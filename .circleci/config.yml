@@ -201,8 +201,8 @@ jobs:
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --output text >> inventory
-              cat inventory
+              --output text >> inventory.txt
+              cat inventory.txt
               
       - persist_to_workspace:
           root: .
@@ -251,8 +251,8 @@ jobs:
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
             cat backend/.env
             cd .circleci/ansible
-            cat inventory
-            ansible-playbook -i inventory configure-server.yml
+            cat inventory.txt
+            ansible-playbook -i inventory.txt configure-server.yml
       
        # Here's where you will add some code to rollback on failure      
       - destroy-environment
@@ -287,10 +287,10 @@ jobs:
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
             npm install
-            #npm run migrations > migration_status            
-            touch migrations_log.txt
-            npm run migrations >> migrations_log.txt
-            cat migrations_log.txt
+            npm run migrations > migration_status            
+           #touch migrations_log.txt
+           #npm run migrations >> migrations_log.txt
+           #cat migrations_log.txt
       - run:
           name: Send migration results to memstash
           working_directory: ./backend
@@ -305,7 +305,7 @@ jobs:
             fi
             echo "WorkflowID=${CIRCLE_WORKFLOW_ID:0:7}"
      # Here's where you will add some code to rollback on failure 
-      - destroy-environment   
+     # - destroy-environment   
 
   deploy-frontend:
     docker:
@@ -373,8 +373,8 @@ jobs:
             export ANSIBLE_HOST_KEY_CHECKING=False 
             export host_key_checking=False
             export record_host_keys=False
-            cat inventory
-            ansible-playbook -i inventory deploy-backend.yml -vv
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml -vv
       # Here's where you will add some code to rollback on failure
       - destroy-environment
       - revert-migrations
