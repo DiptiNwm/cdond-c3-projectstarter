@@ -249,8 +249,8 @@ jobs:
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
-            cd .circleci/ansible
             cat backend/.env
+            cd .circleci/ansible
             cat inventory
             ansible-playbook -i inventory configure-server.yml
       
@@ -287,8 +287,10 @@ jobs:
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ".env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ".env"
             npm install
-            npm run migrations > migration_status
-            echo migration_status
+            #npm run migrations > migration_status            
+            touch migrations_log.txt
+            npm run migrations >> migrations_log.txt
+            cat migrations_log.txt
       - run:
           name: Send migration results to memstash
           working_directory: ./backend
