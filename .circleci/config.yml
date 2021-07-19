@@ -191,7 +191,7 @@ jobs:
               --filters "Name=tag:project,Values=diptiudapeopleBackend" \
               --query "Reservations[*].Instances[*].PublicIpAddress" \              
               --output text)
-            curl -H "Content-Type: text/plain" -H "token: ac8ac330-10d2-4a12-bffc-d5d15eade43d" --request PUT --data "http://13.59.137.36:3030" https://api.memstash.io/values/BACKEND_URL
+            curl -H "Content-Type: text/plain" -H "token: ac8ac330-10d2-4a12-bffc-d5d15eade43d" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
                         
       - run:
           name: Add back-end ip to ansible inventory
