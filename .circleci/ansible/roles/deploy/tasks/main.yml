@@ -9,6 +9,7 @@
       src: ~/root/project/backend/dist/
       dest: /home/ubuntu/uda_app
  #     recursive: true
+      mode: 0644
 
   - name: "copy node_modules"
     become: yes
@@ -17,6 +18,7 @@
       src: ~/root/project/backend/node_modules
       dest: /home/ubuntu/uda_app
 #      recursive: true
+      mode: 0644
 
   - name: "delete anything that might already be running"
     become: true
