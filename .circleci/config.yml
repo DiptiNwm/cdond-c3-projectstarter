@@ -343,12 +343,6 @@ jobs:
             pip3 install awscli
             aws --version 
             export ANSIBLE_HOST_KEY_CHECKING=False
-      
-      - run:
-          name: build backend
-          working_directory: ./backend
-          command: |            
-            npm run build
             
       - run:
           name: Deploy backend
