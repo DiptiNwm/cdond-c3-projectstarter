@@ -433,9 +433,9 @@ workflows:
 #      - build-frontend:
 #          requires:
 #            - install-frontend-dependencies
-#      - build-backend:
-#          requires:
-#            - install-backend-dependencies
+      - build-backend:
+          requires:
+            - install-backend-dependencies
 #      - test-frontend:
 #          requires: 
 #            - build-frontend
