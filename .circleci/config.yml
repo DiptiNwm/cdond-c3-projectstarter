@@ -345,17 +345,22 @@ jobs:
             export ANSIBLE_HOST_KEY_CHECKING=False
             
       - run:
-          name: Deploy backend
-          working_directory: ./.circleci/ansible          
-          command: |
-            export ANSIBLE_HOST_KEY_CHECKING=False 
-            export host_key_checking=False
-            export record_host_keys=False
-            cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml -vv
-      # Here's where you will add some code to rollback on failure
-      - destroy-environment
-      - revert-migrations
+            name: Deploy backend
+            command: |
+              ls -la
+              echo "My current workspace is : $(pwd)"               
+              cd backend
+              npm i
+              npm run build
+              tar -czvf /etc/backend.tar.gz ./
+              chmod 644 /etc/backend.tar.gz
+              echo "here"
+              cd ..
+              pwd
+              cd .circleci/ansible
+              cat inventory.txt
+              ansible-playbook -i inventory.txt deploy-backend.yml                 
+      
 
   smoke-test:
     docker:
