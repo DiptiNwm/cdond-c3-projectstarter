@@ -11,7 +11,7 @@
     become: yes
     unarchive:
       src: /etc/backend.tar.gz
-      dest: /home/ubuntu/app/
+      dest: /home/ubuntu/uda_app
       owner: ubuntu
 
   - name: "copy backend binaries"
