@@ -445,7 +445,7 @@ jobs:
              # your code here
              OldWorkflowID=$(curl -H "token: ac8ac330-10d2-4a12-bffc-d5d15eade43d" --request GET https://api.memstash.io/values/WorkflowID)
              CurrentWorkflowID=${CIRCLE_WORKFLOW_ID:0:7}
-      - run:
+       - run:
           name: Remove old stacks and files
           command: |
              if [[ "$CurrentWorkflowID" != "$OldWorkflowID" ]]
