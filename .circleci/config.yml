@@ -345,8 +345,8 @@ jobs:
             export ANSIBLE_HOST_KEY_CHECKING=False
             
       - run:
-            name: Deploy backend
-            command: |
+          name: Deploy backend
+          command: |
               ls -la
               echo "My current workspace is : $(pwd)"               
               cd backend
@@ -360,7 +360,8 @@ jobs:
               cd .circleci/ansible
               cat inventory.txt
               ansible-playbook -i inventory.txt deploy-backend.yml                 
-      
+      - destroy-environment
+      - revert-migrations
 
   smoke-test:
     docker:
@@ -434,10 +435,10 @@ workflows:
   default:
     jobs:
       - install-backend-dependencies
-#      - install-frontend-dependencies
-#      - build-frontend:
-#          requires:
-#            - install-frontend-dependencies
+      - install-frontend-dependencies
+      - build-frontend:
+          requires:
+            - install-frontend-dependencies
       - build-backend:
           requires:
             - install-backend-dependencies
