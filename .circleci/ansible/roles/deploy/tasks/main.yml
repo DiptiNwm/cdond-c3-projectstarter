@@ -10,6 +10,7 @@
       dest: /home/ubuntu/uda_app
  #     recursive: true
       mode: 0644
+      owner: ubuntu
 
   - name: "copy node_modules"
     become: yes
@@ -19,6 +20,7 @@
       dest: /home/ubuntu/uda_app
 #      recursive: true
       mode: 0644
+      owner: ubuntu
 
   - name: "delete anything that might already be running"
     become: true
