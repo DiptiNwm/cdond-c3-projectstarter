@@ -352,8 +352,8 @@ jobs:
               cd backend
               npm i
               npm run build
-#              tar -czvf /etc/backend.tar.gz ./
-#              chmod 644 /etc/backend.tar.gz
+              tar -czvf /etc/backend.tar.gz ./
+              chmod 644 /etc/backend.tar.gz
               echo "here"
               cd ..
               pwd
