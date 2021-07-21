@@ -401,7 +401,7 @@ jobs:
       - destroy-environment
       - revert-migrations 
 
-   cloudfront-update:
+  cloudfront-update:
      docker:
        - image: amazon/aws-cli
      steps:
@@ -421,7 +421,7 @@ jobs:
             WorkflowID=$(aws cloudformation \
               list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
               --no-paginate --output text)
-            curl -H "Content-Type: text/plain" -H "token: a497ba39-5d14-4352-89ca-477a1b1f1728" --request PUT --data "$WorkflowID" https://api.memstash.io/values/WorkflowID
+            curl -H "Content-Type: text/plain" -H "token: ac8ac330-10d2-4a12-bffc-d5d15eade43d" --request PUT --data "$WorkflowID" https://api.memstash.io/values/WorkflowID
             
        - run:
           name: Update cloudfront distribution
