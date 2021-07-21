@@ -394,26 +394,44 @@ jobs:
             URL="https://udapeople-20c1024.s3.us-east-2.amazonaws.com/index.html"
             if curl -s ${URL} | grep "Welcome"
             then
-              return 1
-            else
               return 0
+            else
+              return 1
             fi
       - destroy-environment
       - revert-migrations 
 
-#   cloudfront-update:
-#     docker:
-#       # Docker image here that supports AWS CLI
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Update cloudfront distribution
-#           command: |
-#             # your code here
+   cloudfront-update:
+     docker:
+       - image: amazon/aws-cli
+     steps:
+      # Checkout code from git
+       - checkout
+       - run:
+          name: Install dependencies
+          command: |
+            yum install -y tar gzip curl
+            curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+            yum install -y nodejs
+            
+       - run:
+          name: get old workflow if from memstash for cleanup phase
+          working_directory: ./.circleci/files
+          command: |
+            WorkflowID=$(aws cloudformation \
+              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+              --no-paginate --output text)
+            curl -H "Content-Type: text/plain" -H "token: a497ba39-5d14-4352-89ca-477a1b1f1728" --request PUT --data "$WorkflowID" https://api.memstash.io/values/WorkflowID
+            
+       - run:
+          name: Update cloudfront distribution
+          working_directory: ./.circleci/files
+          command: |
+            aws cloudformation deploy \
+              --template-file cloudfront.yml \
+              --stack-name udapeople-cloudfront-production \
+              --parameter-overrides WorkflowID=20c1024 \
+              --tags project=diptiudapeople
 #       # Here's where you will add some code to rollback on failure  
 
 # cleanup:
@@ -474,7 +492,7 @@ workflows:
 #          requires: [run-migrations, deploy-backend]
       - smoke-test
 #          requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
+      - cloudfront-update:
+          requires: [smoke-test]
       # - cleanup:
       #     requires: [cloudfront-update]
