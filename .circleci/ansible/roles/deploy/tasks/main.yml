@@ -1,10 +1,24 @@
 --- 
 
+ - name: "Create directory"
+   become_user: true
+   file:
+     path: /home/ubuntu/uda_app
+     state: directory
+
+
+ - name: "Copy backend build to server"
+   become: yes
+   unarchive:
+     src: /etc/backend.tar.gz
+     dest: /home/ubuntu/app/
+     owner: ubuntu
+
   - name: "copy backend binaries"
     become: yes
 #    synchronize:
     copy:
-      src: ./root/project/backend/dist/
+      src: /root/project/backend/dist/
       dest: /home/ubuntu/uda_app
  #     recursive: true
       mode: 0644
@@ -14,7 +28,7 @@
     become: yes
 #    synchronize:
     copy:
-      src: ./root/project/backend/node_modules
+      src: /root/project/backend/node_modules
       dest: /home/ubuntu/uda_app
 #      recursive: true
       mode: 0644
