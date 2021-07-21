@@ -6,25 +6,13 @@
       path: /home/ubuntu/uda_app
       state: directory
 
-  - name: "copy backend binaries"
+  - name: "Copy backend build to server"
     become: yes
-#    synchronize:
-    copy:
-      src: /root/project/backend/dist
+    unarchive:
+      src: /etc/backend.tar.gz
       dest: /home/ubuntu/uda_app
- #     recursive: true
-      mode: 0644
       owner: ubuntu
-
-  - name: "copy node_modules"
-    become: yes
-#    synchronize:
-    copy:
-      src: /root/project/backend/node_modules
-      dest: /home/ubuntu/uda_app
-#      recursive: true
-      mode: 0644
-      owner: ubuntu
+ 
 
   - name: "delete anything that might already be running"
     become: true
