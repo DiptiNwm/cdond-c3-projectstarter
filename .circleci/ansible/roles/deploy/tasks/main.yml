@@ -1,18 +1,18 @@
 --- 
 
- - name: "Create directory"
-   become_user: true
-   file:
-     path: /home/ubuntu/uda_app
-     state: directory
+  - name: "Create directory"
+    become_user: true
+    file:
+      path: /home/ubuntu/uda_app
+      state: directory
 
 
- - name: "Copy backend build to server"
-   become: yes
-   unarchive:
-     src: /etc/backend.tar.gz
-     dest: /home/ubuntu/app/
-     owner: ubuntu
+  - name: "Copy backend build to server"
+    become: yes
+    unarchive:
+      src: /etc/backend.tar.gz
+      dest: /home/ubuntu/app/
+      owner: ubuntu
 
   - name: "copy backend binaries"
     become: yes
